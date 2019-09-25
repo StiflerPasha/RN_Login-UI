@@ -14,10 +14,10 @@ import {
    Alert,
 }                          from 'react-native';
 
-import Icon    from 'react-native-vector-icons/Ionicons';
 import bgImage from '../assets/images/bg.jpg';
 import logo    from '../assets/images/logo.png';
 import Colors  from '../constants/Colors';
+import Icon    from 'react-native-vector-icons/Ionicons';
 
 const { width: WIDTH } = Dimensions.get('window');
 
@@ -26,13 +26,13 @@ const Login = () => {
    const [userName, setUserName] = useState('');
    const [password, setPassword] = useState('');
 
-
    const loginBtnHandler = () => {
 	  Keyboard.dismiss();
 	  Alert.alert(
 		 'Log In (options)',
 		 `Name: ${ userName } \nPassword: ${ password }`,
 	  );
+	  console.log(`Name: ${ userName } \nPassword: ${ password }`);
 	  setPassword('');
    };
 
@@ -41,17 +41,20 @@ const Login = () => {
 		 'Register',
 		 'Redirect to Register Form',
 	  );
+	  console.log('Redirect to Register Form');
    };
 
    return (
 	  <ImageBackground source={ bgImage } style={ styles.backgroundContainer }>
 		 <TouchableWithoutFeedback onPress={ () => Keyboard.dismiss() }>
 			<KeyboardAvoidingView behavior={ 'padding' } enabled>
+
 			   <View style={ styles.logoContainer }>
 				  <Image source={ logo } style={ styles.logo } />
-				  <Text style={ styles.logoText }>{ 'REACT NATIVE  /  Log In' }</Text>
+				  <Text style={ styles.logoText }>{ 'REACT NATIVE' }</Text>
 			   </View>
-			   <View>
+
+			   <View style={ styles.form }>
 				  <View style={ styles.inputContainer }>
 					 <Icon
 						name={ 'ios-person' }
@@ -66,6 +69,7 @@ const Login = () => {
 						value={ userName }
 						onChangeText={ text => setUserName(text) } />
 				  </View>
+
 				  <View style={ styles.inputContainer }>
 					 <Icon
 						name={ 'ios-lock' }
@@ -85,34 +89,37 @@ const Login = () => {
 						onPress={ () => setShowPassword(!showPassword) }>
 						<Icon
 						   name={ showPassword ? 'ios-eye-off' : 'ios-eye' }
-						   size={ 28 }
+						   size={ 24 }
 						   color={ Colors.login } />
 					 </TouchableOpacity>
 				  </View>
+
+				  <View style={ styles.multiBtnContainer }>
+					 <TouchableOpacity
+						style={ styles.btnLogin }
+						activeOpacity={ 0.7 }
+						onPress={ loginBtnHandler }>
+						<Text style={ styles.btnText }>
+						   Log In
+						</Text>
+					 </TouchableOpacity>
+
+					 <TouchableOpacity
+						style={ styles.btnRegister }
+						activeOpacity={ 0.7 }
+						onPress={ registerBtnHandler }>
+						<Text style={ styles.btnText }>
+						   Register
+						</Text>
+					 </TouchableOpacity>
+				  </View>
 			   </View>
-			   <View style={ styles.multiBtnContainer }>
-				  <TouchableOpacity
-					 style={ styles.btnLogin }
-					 activeOpacity={ 0.7 }
-					 onPress={ loginBtnHandler }>
-					 <Text style={ styles.btnText }>
-						Log In
-					 </Text>
-				  </TouchableOpacity>
-				  <TouchableOpacity
-					 style={ styles.btnRegister }
-					 activeOpacity={ 0.7 }
-					 onPress={ registerBtnHandler }>
-					 <Text style={ styles.btnText }>
-						Register
-					 </Text>
-				  </TouchableOpacity>
-			   </View>
+
 			   <View style={ { height: 125 } } />
+
 			</KeyboardAvoidingView>
 		 </TouchableWithoutFeedback>
 	  </ImageBackground>
-
    );
 };
 
@@ -142,9 +149,12 @@ const styles = StyleSheet.create({
 	  marginTop: 10,
 	  opacity: .5,
    },
+   form: {
+	  width: WIDTH - 80,
+	  maxWidth: 350,
+   },
    inputContainer: {
 	  marginTop: 10,
-	  width: WIDTH - 125,
    },
    input: {
 	  height: 45,
@@ -168,14 +178,13 @@ const styles = StyleSheet.create({
 	  flexDirection: 'row',
 	  justifyContent: 'space-between',
 	  marginTop: 20,
-	  width: WIDTH - 125,
    },
    btnRegister: {
 	  justifyContent: 'center',
 	  width: '45%',
 	  height: 35,
 	  borderRadius: 25,
-	  backgroundColor: 'rgba(0,100,0,0.35)',
+	  backgroundColor: 'rgba(0,100,0,1)',
    },
    btnLogin: {
 	  justifyContent: 'center',
